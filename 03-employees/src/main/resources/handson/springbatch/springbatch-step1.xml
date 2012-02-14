@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
+
+	<!-- Reader -->
+	<!-- TODO : implementer/réutiliser le reader pour lire le CSV employee -->
+	<!-- TODO: utiliser EmployeeFieldSetMapper afin de mapper correctement les dates -->
+	<bean id="reader1" class="handson.springbatch.reader.NoopItemReader" scope="step">
+	</bean>
+
+	<!-- Processor -->
+	<bean id="processor1" class="org.springframework.batch.item.support.CompositeItemProcessor">
+		<property name="delegates">
+			<list>
+				<!-- TODO : supprimer ce bean PassThroughItemProcessor -->
+				<!-- TODO : ajouter vos propres ItemProcessor pour gere les regles de gestion -->
+				<bean class="org.springframework.batch.item.support.PassThroughItemProcessor" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- Writer -->
+	<!-- TODO : implementer/reutiliser le writer pour ecrire dans la base en JDBC -->
+	<bean id="writer1" class="handson.springbatch.writer.NoopItemWriter">
+	</bean>
+
+</beans>
