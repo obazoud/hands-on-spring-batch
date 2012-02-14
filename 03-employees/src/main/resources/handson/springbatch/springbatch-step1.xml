@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
+
+	<!-- Reader -->
+	<!-- TODO: utiliser EmployeeFieldSetMapper afin de mapper correctement les dates -->
+	<bean id="reader1" class="org.springframework.batch.item.file.FlatFileItemReader"
+		scope="step">
+		<property name="resource" value="#{jobParameters['datafileEmployees']}" />
+		<property name="lineMapper" ref="lineMapper1" />
+	</bean>
+
+	<bean id="lineMapper1"
+		class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+		<property name="lineTokenizer" ref="lineTokenizer1" />
+		<property name="fieldSetMapper" ref="fieldSetMapper1" />
+	</bean>
+
+	<bean id="lineTokenizer1"
+		class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
+		<property name="delimiter" value="," />
+		<property name="names"
+			value="id,birthDate,firstName,lastName,gender,hireDate" />
+	</bean>
+
+	<bean id="fieldSetMapper1" class="handson.springbatch.reader.EmployeeFieldSetMapper">
+		<property name="targetType" value="handson.springbatch.model.Employee" />
+	</bean>
+
+	<!-- Processor -->
+	<bean id="processor1" class="org.springframework.batch.item.support.CompositeItemProcessor">
+		<property name="delegates">
+			<list>
+				<!-- TODO : ajouter vos propres ItemProcessor pour gere les regles de gestion -->
+				<bean
+					class="org.springframework.batch.item.validator.ValidatingItemProcessor">
+					<property name="validator">
+						<bean class="handson.springbatch.processor.EmployeeGenderValidator" />
+					</property>
+				</bean>
+				<bean class="handson.springbatch.processor.EmployeeBirthDateItemProcessor" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- Writer -->
+	<bean id="writer1" class="org.springframework.batch.item.database.JdbcBatchItemWriter">
+		<property name="assertUpdates" value="true" />
+		<property name="itemSqlParameterSourceProvider">
+			<bean
+				class="org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider" />
+		</property>
+		<property name="sql"
+			value="INSERT INTO EMPLOYEES (ID, BIRTH_DATE, FIRST_NAME, LAST_NAME, GENDER, HIRE_DATE)
+			VALUES(:id, :birthDate, :firstName, :lastName, :gender, :hireDate)" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+
+</beans>

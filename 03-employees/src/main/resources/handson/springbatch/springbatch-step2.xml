@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:batch="http://www.springframework.org/schema/batch"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
+
+	<!-- Reader -->
+	<bean id="reader2" class="org.springframework.batch.item.xml.StaxEventItemReader" scope="step">
+		<property name="resource" value="#{jobParameters['datafileSalaries']}" />
+		<property name="unmarshaller" ref="salaryMarshaller" />
+		<property name="fragmentRootElementName" value="salary" />
+	</bean>
+
+	<bean id="salaryMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller">
+		<property name="aliases">
+			<map>
+				<entry key="salary" value="handson.springbatch.model.Salary" />
+			</map>
+		</property>
+		<property name="converters">
+			<list>
+				<bean class="com.thoughtworks.xstream.converters.basic.DateConverter">
+					<constructor-arg value="yyyy-MM-dd" />
+					<constructor-arg value="yyyy-MM-dd" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Processor -->
+	<bean id="processor2" class="org.springframework.batch.item.support.CompositeItemProcessor">
+		<property name="delegates">
+			<list>
+				<bean class="handson.springbatch.processor.SalaryIdItemProcessor" />
+				<bean
+					class="org.springframework.batch.item.validator.ValidatingItemProcessor">
+					<property name="validator" ref="salaryEmployeeValidator" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="salaryEmployeeValidator" class="handson.springbatch.processor.SalaryEmployeeValidator" />
+
+	<!-- Writer -->
+	<bean id="writer2" class="org.springframework.batch.item.database.JdbcBatchItemWriter">
+		<property name="assertUpdates" value="true" />
+		<property name="itemSqlParameterSourceProvider">
+			<bean class="org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider" />
+		</property>
+		<property name="sql"
+			value="INSERT INTO SALARIES (ID, EMP_NO, AMOUNT, FROM_DATE, TO_DATE) 
+			VALUES(:id, :employeeId, :amount, :fromDate, :toDate)" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+</beans>

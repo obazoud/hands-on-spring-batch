@@ -1,0 +1,7 @@
+.project
+.settings
+.classpath
+target
+*.class
+*.jar
+*sublime*

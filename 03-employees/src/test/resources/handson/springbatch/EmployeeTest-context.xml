@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<import resource="classpath:/handson/springbatch/springbatch-infrastructure.xml" />
+	<import resource="classpath:/handson/springbatch/springbatch-job.xml" />
+
+	<context:property-placeholder location="classpath:/batch-test.properties" />
+
+	<bean class="org.springframework.batch.test.JobLauncherTestUtils" />
+
+	<bean id="dataSourceInitializer" class="org.springframework.batch.test.DataSourceInitializer">
+		<property name="dataSource" ref="dataSource" />
+		<property name="destroyScripts">
+			<list>
+				<value>classpath:/org/springframework/batch/core/schema-drop-h2.sql</value>
+			</list>
+		</property>
+		<property name="initScripts">
+			<list>
+				<value>classpath:/org/springframework/batch/core/schema-h2.sql</value>
+				<value>classpath:/employees-schema.sql</value>
+			</list>
+		</property>
+	</bean>
+</beans>
