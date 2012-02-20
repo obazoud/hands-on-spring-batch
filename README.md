@@ -2,6 +2,7 @@
 
 ##Prérequis
 Sur votre machine, il faut installer :
+
 1. maven 3.0.3
 2. git 1.7.x
 3. mysql 5.1.x

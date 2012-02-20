@@ -7,6 +7,7 @@ La description de ce job se trouve dans springbatch-job.xml.
 
 Le but de l'exercice est de découvrir le composant [Tasklet](http://static.springsource.org/spring-batch/apidocs/org/springframework/batch/core/step/tasklet/Tasklet.html).
 Vous devez :
+
 1. Vérifier que les tests "HelloWorldJobTest" ne fonctionnent pas
 2. Finaliser l'implémentation de HelloWorldTasklet
 3. Vérifier que les tests fonctionnent à nouveau

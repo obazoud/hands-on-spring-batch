@@ -3,6 +3,7 @@
 ##Hello world chunk
 
 Ce job contient une seule étape contenant une [Tasklet orienté chunk](http://static.springsource.org/spring-batch/reference/html-single/index.html#chunkOrientedProcessing)
+
 * un [ItemReader](http://static.springsource.org/spring-batch/apidocs/org/springframework/batch/item/ItemReader.html)
 * un [ItemProcessor](http://static.springsource.org/spring-batch/apidocs/org/springframework/batch/item/ItemProcessor.html)
 * un [ItemWriter](http://static.springsource.org/spring-batch/apidocs/org/springframework/batch/item/ItemWriter.html)
