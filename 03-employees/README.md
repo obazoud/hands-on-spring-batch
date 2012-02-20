@@ -49,7 +49,7 @@ Le projet utilise le [Application Assembler Maven Plugin](http://mojo.codehaus.o
 
 <pre class="terminal">
 % mvn clean package -pl 03-employees
-% mysql -h localhost -u xxx --password=xxx employees < 03-employees/src/main/resources/employees-mysql.sql
+% mysql -h localhost -u xxx --password=xxx employees &lt; 03-employees/src/main/resources/employees-mysql.sql
 % sh 03-employees/target/appassembler/bin/employee.sh handson/springbatch/springbatch.xml job datafileEmployees=file:///path/to/employees.csv datafileSalaries=file:///path/to/salaries.xml
 </pre>
 

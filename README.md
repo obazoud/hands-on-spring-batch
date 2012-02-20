@@ -7,13 +7,14 @@ Sur votre machine, il faut installer :
 2. git 1.7.x
 3. mysql 5.1.x
 4. votre IDE préféré
-et quelques connaissances en shel seront nécessaires.
+et quelques connaissances en shell seront nécessaires.
 
 ##Introduction
 
-Le but de ce Hands on est de faire des batchs à l'aide [Spring Batch](http://static.springsource.org/spring-batch).
+Le but de ce Hands-on est de faire des batchs à l'aide [Spring Batch](http://static.springsource.org/spring-batch).
 
 En premier lieu, la prise en main se fera à travers deux batchs:
+
 * Le premier 'Hello world tasklet' consistera à implementer une Tasklet
 * Le deuxième 'Hello world chunk' sera un chunk à implementer
 
@@ -24,7 +25,8 @@ Enfin, le dernier batch 'Employee' permettra de faire un batch plus réaliste.
 
 Les sources se trouvent sur [GitHub](https://github.com/).
 Si vous avez un compte GitHub, forker le projet et cloner votre fork.
-Sinon :
+
+Sinon:
 <pre class="terminal">
 % git clone git@github.com:obazoud/hands-on-spring-batch.git
 </pre>
