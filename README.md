@@ -5,9 +5,12 @@ Sur votre machine, il faut installer :
 
 1. maven 3.0.3
 2. git 1.7.x
-3. mysql 5.1.x
+3. MySQL 5.1.x
 4. votre IDE préféré
 et quelques connaissances en shell seront nécessaires.
+
+MySQL sera utilisé uniquement lors de l'exercice 3 lors du lancement du batch par le shell.
+L'ensemble des tests intégration utilise la base de données embarquée [H2](http://www.h2database.com)
 
 ##Introduction
 
